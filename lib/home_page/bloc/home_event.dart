@@ -1,14 +1,9 @@
+abstract class BaseEvent {}
 
-abstract class BaseEvent {
-  final bool withDelay;
+class SocketDataReceived extends BaseEvent {
+  SocketDataReceived(this.value);
 
-  BaseEvent(this.withDelay);
+  final int value;
 }
 
-class SocketEvent extends BaseEvent {
-  SocketEvent(bool withDelay) : super(withDelay);
-}
-
-class NumberRequestEvent extends BaseEvent {
-  NumberRequestEvent(bool withDelay) : super(withDelay);
-}
+class NumberRequested extends BaseEvent {}
