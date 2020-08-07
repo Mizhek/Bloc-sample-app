@@ -1,28 +1,26 @@
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 abstract class BaseState extends Equatable {
   @override
   bool get stringify => true;
-}
 
-class InitState extends BaseState {
   @override
   List<Object> get props => [];
 }
 
-class DataFromSocketState extends BaseState {
-  final Color color;
+class InitState extends BaseState {}
 
-  DataFromSocketState(this.color);
+class DataFromSocketState extends BaseState {
+  final int data;
+
+  DataFromSocketState(this.data);
 
   @override
-  List<Object> get props => [color];
+  List<Object> get props => [data];
 }
 
 class DataFromRequestState extends BaseState {
-  final double number;
+  final int number;
 
   DataFromRequestState(this.number);
 

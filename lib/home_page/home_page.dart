@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double number;
-  Color color;
+  int requestNumber;
+  int socketData;
 
   final bloc = MyBloc(InitState());
 
@@ -33,16 +33,16 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: BlocBuilder<MyBloc, BaseState>(
-        bloc: bloc,
+        cubit: bloc,
         builder: (BuildContext context, state) {
           states.insert(0, state.toString());
           print('Building state: $state');
 
           if (state is DataFromRequestState) {
-            number = state.number;
+            requestNumber = state.number;
           }
           if (state is DataFromSocketState) {
-            color = state.color;
+            socketData = state.data;
           }
           return Container(
             width: double.infinity,
@@ -53,12 +53,9 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   'Number from request:',
                 ),
-                Container(
-                  color: color ?? Colors.transparent,
-                  child: Text(
-                    '$number',
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
+                Text(
+                  '$requestNumber',
+                  style: Theme.of(context).textTheme.headline4,
                 ),
                 Expanded(
                   child: states.isEmpty
@@ -74,15 +71,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     RaisedButton(
-                      child: Text('With delay'),
+                      child: Text('Add event'),
                       onPressed: () {
-                        bloc.add(NumberRequestEvent(true));
-                      },
-                    ),
-                    RaisedButton(
-                      child: Text('Without delay'),
-                      onPressed: () {
-                        bloc.add(NumberRequestEvent(false));
+                        bloc.add(NumberRequested());
                       },
                     ),
                   ],
